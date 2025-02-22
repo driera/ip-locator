@@ -34,7 +34,7 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
-        env: 
+        # env: 
           # VITE_SECRET_KEY: ${{ secrets.MY_GITHUB_KEY }}
       - name: Setup Pages
         uses: actions/configure-pages@v4
