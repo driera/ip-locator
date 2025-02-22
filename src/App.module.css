@@ -1,0 +1,9 @@
+.container {
+  position: relative;
+  width: 100dvw;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: hsl(200, 88%, 6%);
+}

@@ -1,0 +1,13 @@
+:root {
+    /* Colors */
+    --main-color: hsl(195, 100%, 40%);
+    --dark-color: hsl(0, 0%, 7%);
+    --light-color: hsl(0, 0%, 100%);
+
+    /* Typography */
+    --primary-font: "Noto Sans", sans-serif;
+
+    /* Line */
+    --thin-line: .1px solid hsla(0, 0%, 100%, 0.35);
+    --thin-line-dark: .1px solid hsla(0, 0%, 7%, 0.35);
+}
