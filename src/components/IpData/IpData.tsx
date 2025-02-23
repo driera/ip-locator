@@ -1,8 +1,8 @@
 import { FunctionComponent } from "react";
-import { useIPData } from "./useIpData";
+import { useIpData } from "./useIpData";
 
 export const IpData: FunctionComponent = () => {
-  const ipData = useIPData();
+  const ipData = useIpData();
   return (
     <>
       {ipData.loading && (
@@ -10,10 +10,10 @@ export const IpData: FunctionComponent = () => {
           Loading your IP address...
         </div>
       )}
-      {ipData.ip && (
+      {ipData.data.ip && (
         <div>
           <h2>Your IP Address</h2>
-          <p>{ipData.ip}</p>
+          <p>{ipData.data.ip}</p>
         </div>
       )}
     </>

@@ -2,28 +2,34 @@ import { useEffect, useState } from "react";
 import { fetchUserIP } from "../../services/fetch-user-ip";
 
 interface IPData {
-  ip: string | null;
+  data: {
+    ip: string | null;
+  };
   loading: boolean;
 }
 
-export const useIPData = (): IPData => {
+export const useIpData = (): IPData => {
   const [data, setData] = useState<IPData>({
-    ip: null,
+    data: {
+      ip: null
+    },
     loading: true
   });
 
   useEffect(() => {
-    const getIP = async () => {
+    const getIpData = async () => {
       const response = await fetchUserIP();
       if (response && response.ip) {
         setData({
-          ip: response.ip,
+          data: {
+            ip: response.ip
+          },
           loading: false
         });
       }
     };
 
-    getIP();
+    getIpData();
   }, []);
 
   return data;

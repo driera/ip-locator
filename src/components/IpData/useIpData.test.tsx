@@ -1,6 +1,7 @@
 import { renderHook, waitFor } from "@testing-library/react";
-import { useIPData } from "./useIpData";
+import { useIpData } from "./useIpData";
 import { fetchUserIP } from "../../services/fetch-user-ip";
+import { ipDataSample } from "../../services/data-samples";
 
 jest.mock("../../services/fetch-user-ip");
 const mockedFetchUserIP = fetchUserIP as jest.MockedFunction<
@@ -13,20 +14,24 @@ describe("useGetIpData", () => {
   });
 
   it("should return loading state initially", () => {
-    const { result } = renderHook(() => useIPData());
+    const { result } = renderHook(() => useIpData());
 
     expect(result.current.loading).toEqual(true);
   });
 
   it("should return IP data when API call succeeds", async () => {
-    const mockIP = { ip: "192.168.1.1" };
-    mockedFetchUserIP.mockResolvedValueOnce(mockIP);
+    mockedFetchUserIP.mockResolvedValueOnce({
+      ...ipDataSample,
+      ip: "192.168.1.1"
+    });
 
-    const { result } = renderHook(() => useIPData());
+    const { result } = renderHook(() => useIpData());
 
     await waitFor(() => {
       expect(result.current).toEqual({
-        ip: "192.168.1.1",
+        data: {
+          ip: "192.168.1.1"
+        },
         loading: false
       });
     });

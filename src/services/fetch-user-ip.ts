@@ -1,7 +1,7 @@
 import { APIError, IPResponse } from "./types";
 
 const IPIFY_API_URL = `https://geo.ipify.org/api/v2/country,city?`;
-const IPIFY_API_KEY = import.meta.env.VITE_IPIFY_API_KEY;
+const IPIFY_API_KEY = import.meta.env.VITE_IPIFY_KEY;
 
 export const fetchUserIP = async (): Promise<IPResponse> => {
   try {
