@@ -1,8 +1,8 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { useIPData } from "./useIpData";
-import { fetchUserIP } from "../services/fetch-user-ip";
+import { fetchUserIP } from "../../services/fetch-user-ip";
 
-jest.mock("../services/fetch-user-ip");
+jest.mock("../../services/fetch-user-ip");
 const mockedFetchUserIP = fetchUserIP as jest.MockedFunction<
   typeof fetchUserIP
 >;

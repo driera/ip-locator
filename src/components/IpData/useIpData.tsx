@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchUserIP } from "../services/fetch-user-ip";
+import { fetchUserIP } from "../../services/fetch-user-ip";
 
 interface IPData {
   ip: string | null;
