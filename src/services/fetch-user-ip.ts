@@ -1,10 +1,13 @@
 import { APIError, IPResponse } from "./types";
 
-const API_URL = "https://api.ipify.org?format=json";
+const IPIFY_API_URL = `https://geo.ipify.org/api/v2/country,city?`;
+const IPIFY_API_KEY = import.meta.env.VITE_IPIFY_API_KEY;
 
 export const fetchUserIP = async (): Promise<IPResponse> => {
   try {
-    const response = await fetch(API_URL, { method: "GET" });
+    const response = await fetch(`${IPIFY_API_URL}apiKey=${IPIFY_API_KEY}`, {
+      method: "GET"
+    });
 
     if (!response.ok) {
       throw new APIError(

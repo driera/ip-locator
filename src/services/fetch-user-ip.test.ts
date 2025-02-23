@@ -9,19 +9,24 @@ describe("fetchUserIP", () => {
     jest.resetAllMocks();
   });
 
-  it("should return IP address when API call is successful", async () => {
-    const mockIP = { ip: "192.168.1.1" };
+  it("should return IP data when API call is successful", async () => {
+    const mockIPData = {
+      ip: "192.168.1.1",
+      location: "ES",
+      region: "Valencia",
+      city: "Valencia"
+    };
     fetchMock({
       ok: true,
-      json: () => Promise.resolve(mockIP)
+      json: () => Promise.resolve(mockIPData)
     });
 
     const result = await fetchUserIP();
 
-    expect(result).toEqual(mockIP);
+    expect(result).toEqual(mockIPData);
     const options = expect.anything();
     expect(fetch).toHaveBeenCalledWith(
-      "https://api.ipify.org?format=json",
+      expect.stringContaining("https://geo.ipify.org/api/v2/country,city"),
       options
     );
   });
@@ -42,7 +47,7 @@ describe("fetchUserIP", () => {
     await expect(fetchUserIP()).rejects.toThrow("Invalid response format");
   });
 
-  it("should throw IPAPIError when IP is missing from response", async () => {
+  it("should throw APIError when IP is missing from response", async () => {
     fetchMock({
       ok: true,
       json: () => Promise.resolve({})
@@ -53,7 +58,7 @@ describe("fetchUserIP", () => {
     );
   });
 
-  it("should throw IPAPIError on network error", async () => {
+  it("should throw APIError on network error", async () => {
     fetchMockWithNetworkError(new TypeError("Network error"));
 
     await expect(fetchUserIP()).rejects.toThrow(
