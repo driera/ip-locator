@@ -1,6 +1,6 @@
-import React, { FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 
-import { ErrorBoundary } from "./components/ErrorBoundary";
+import { ErrorBoundary } from "./components/ErrorBoundary/ErrorBoundary";
 
 import styles from "./App.module.css";
 import { useIPData } from "./hooks/useIpData";

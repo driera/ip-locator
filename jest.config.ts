@@ -12,6 +12,7 @@ const config: Config = {
     "^.+\\.[t|j]sx?$": "babel-jest",
     "^.+\\.svg$": "<rootDir>/src/config/file-transform.js"
   },
+  preset: "ts-jest",
   transformIgnorePatterns: [
     "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$",
     "^.+\\.module\\.(css|sass|scss)$"
