@@ -2,14 +2,36 @@
   position: relative;
   width: 100dvw;
   min-height: 100dvh;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: hsl(200, 88%, 6%);
+  background: hsl(200, 88%, 6%) url("/ip-locator.jpg") no-repeat center center fixed;
+  background-size: cover;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: hsla(200, 88%, 6%, 0.5);
+  }
+
+  & > * {
+    position: relative
+  }
 
   h1 {
     font-size: 36px;
     margin-bottom: 1em;
+
+    @media (max-width: 768px) {
+      font-size: 24px;
+      text-align: center;
+    }
   }
 }
