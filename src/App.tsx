@@ -3,10 +3,10 @@ import React, { FunctionComponent } from "react";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 
 import styles from "./App.module.css";
-import { useGetIPData } from "./hooks/useGetIpData";
+import { useIPData } from "./hooks/useIpData";
 
 const App: FunctionComponent = () => {
-  const ipData = useGetIPData();
+  const ipData = useIPData();
 
   return (
     <ErrorBoundary>
