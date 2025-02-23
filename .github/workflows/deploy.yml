@@ -34,8 +34,8 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
-        # env: 
-          # VITE_SECRET_KEY: ${{ secrets.MY_GITHUB_KEY }}
+        env: 
+          VITE_IPIFY_KEY: ${{ secrets.IPIFY_KEY }}
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
