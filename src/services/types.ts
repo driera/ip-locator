@@ -1,5 +1,10 @@
 export interface IPResponse {
   ip: string;
+  location: {
+    city: string;
+    region: string;
+    country: string;
+  };
 }
 
 export interface IPError {

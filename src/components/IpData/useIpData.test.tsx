@@ -28,9 +28,32 @@ describe("useGetIpData", () => {
     const { result } = renderHook(() => useIpData());
 
     await waitFor(() => {
+      expect(result.current.data.ip).toEqual("192.168.1.1");
+    });
+  });
+
+  it("should return IP location when API call succeeds", async () => {
+    mockedFetchUserIP.mockResolvedValueOnce({
+      ...ipDataSample,
+      location: {
+        city: "New York",
+        region: "NY",
+        country: "US"
+      },
+      ip: "192.168.1.1"
+    });
+
+    const { result } = renderHook(() => useIpData());
+
+    await waitFor(() => {
       expect(result.current).toEqual({
         data: {
-          ip: "192.168.1.1"
+          ip: "192.168.1.1",
+          location: {
+            city: "New York",
+            region: "NY",
+            country: "US"
+          }
         },
         loading: false
       });

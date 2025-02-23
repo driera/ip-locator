@@ -3,6 +3,7 @@ import { useIpData } from "./useIpData";
 
 export const IpData: FunctionComponent = () => {
   const ipData = useIpData();
+  const { ip, location } = ipData.data;
   return (
     <>
       {ipData.loading && (
@@ -10,10 +11,19 @@ export const IpData: FunctionComponent = () => {
           Loading your IP address...
         </div>
       )}
-      {ipData.data.ip && (
+
+      {ip && (
         <div>
           <h2>Your IP Address</h2>
-          <p>{ipData.data.ip}</p>
+          <p>{ip}</p>
+        </div>
+      )}
+      {location && (
+        <div>
+          <h2>Location</h2>
+          <p>
+            {location.city}, {location.region}, {location.country}
+          </p>
         </div>
       )}
     </>

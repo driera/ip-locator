@@ -4,6 +4,11 @@ import { fetchUserIP } from "../../services/fetch-user-ip";
 interface IPData {
   data: {
     ip: string | null;
+    location: {
+      city: string;
+      region: string;
+      country: string;
+    } | null;
   };
   loading: boolean;
 }
@@ -11,7 +16,8 @@ interface IPData {
 export const useIpData = (): IPData => {
   const [data, setData] = useState<IPData>({
     data: {
-      ip: null
+      ip: null,
+      location: null
     },
     loading: true
   });
@@ -19,10 +25,15 @@ export const useIpData = (): IPData => {
   useEffect(() => {
     const getIpData = async () => {
       const response = await fetchUserIP();
-      if (response && response.ip) {
+      if (response) {
         setData({
           data: {
-            ip: response.ip
+            ip: response.ip,
+            location: {
+              city: response.location?.city,
+              region: response.location?.region,
+              country: response.location?.country
+            }
           },
           loading: false
         });
