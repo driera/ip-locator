@@ -6,7 +6,7 @@ interface IPData {
   loading: boolean;
 }
 
-export const useGetIPData = (): IPData => {
+export const useIPData = (): IPData => {
   const [data, setData] = useState<IPData>({
     ip: null,
     loading: true
