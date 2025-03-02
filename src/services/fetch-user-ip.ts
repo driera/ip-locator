@@ -1,11 +1,22 @@
-import { APIError, IPResponse } from "./types";
+import { APIError, FetchUserIPOptions, IPResponse } from "./types";
 
 const IPIFY_API_URL = `https://geo.ipify.org/api/v2/country,city?`;
 const IPIFY_API_KEY = import.meta.env.VITE_IPIFY_KEY;
 
-export const fetchUserIP = async (): Promise<IPResponse> => {
+/**
+ * Fetches IP address data from the IPify API
+ * @param {Object} options - Optional parameters
+ * @param {string} options.search - IP address to search for
+ * @returns {Promise<IPResponse>} - IP address data
+ */
+export const fetchUserIP = async ({
+  search
+}: FetchUserIPOptions = {}): Promise<IPResponse> => {
   try {
-    const response = await fetch(`${IPIFY_API_URL}apiKey=${IPIFY_API_KEY}`, {
+    let fetchUrl = IPIFY_API_URL;
+    if (search) fetchUrl += `ipAddress=${search}`;
+
+    const response = await fetch(`${fetchUrl}&apiKey=${IPIFY_API_KEY}`, {
       method: "GET"
     });
 

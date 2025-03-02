@@ -1,3 +1,6 @@
+export interface FetchUserIPOptions {
+  search?: string;
+}
 export interface IPResponse {
   ip: string;
   location: {
