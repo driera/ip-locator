@@ -8,6 +8,7 @@ interface IPData {
       city: string;
       region: string;
       country: string;
+      coordinates?: string;
     } | null;
     time?: {
       timezone: string;
@@ -37,7 +38,11 @@ export const useIpData = (): IPData => {
             location: {
               city: response.location?.city,
               region: response.location?.region,
-              country: response.location?.country
+              country: response.location?.country,
+              coordinates: formatCoordinates(
+                response.location?.lat,
+                response.location?.lng
+              )
             },
             time: response.location?.timezone
               ? {
@@ -55,6 +60,16 @@ export const useIpData = (): IPData => {
   }, []);
 
   return data;
+};
+
+const formatCoordinates = (
+  latitude?: number,
+  longitude?: number
+): string | undefined => {
+  if (latitude === undefined || longitude === undefined) {
+    return undefined;
+  }
+  return `${latitude}, ${longitude}`;
 };
 
 const formatTimezone = (timezone: string): string => {

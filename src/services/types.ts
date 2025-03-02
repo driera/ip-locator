@@ -5,6 +5,8 @@ export interface IPResponse {
     region: string;
     country: string;
     timezone: string;
+    lat: number;
+    lng: number;
   };
 }
 

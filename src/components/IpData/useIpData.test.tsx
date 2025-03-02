@@ -37,6 +37,8 @@ describe("useGetIpData", () => {
       ...ipDataSample,
       location: {
         ...ipDataSample.location,
+        lat: 32.69922,
+        lng: -117.11281,
         city: "New York",
         region: "NY",
         country: "US"
@@ -53,7 +55,8 @@ describe("useGetIpData", () => {
           location: {
             city: "New York",
             region: "NY",
-            country: "US"
+            country: "US",
+            coordinates: "32.69922, -117.11281"
           }
         }),
         loading: false

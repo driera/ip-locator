@@ -29,6 +29,7 @@ export const IpData: FunctionComponent = () => {
             <p className={styles.boxText}>
               {location.city}, {location.region}, {location.country}
             </p>
+            <p className={styles.boxSubtitle}>{location.coordinates}</p>
           </div>
         )}
         {time && (
