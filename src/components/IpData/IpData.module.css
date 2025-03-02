@@ -38,3 +38,9 @@
     font-size: 18px;
   }
 }
+
+.box-subtitle {
+  font-size: 14px;
+  line-height: 1.5em;
+  font-weight: 200;
+}

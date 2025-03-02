@@ -36,6 +36,7 @@ describe("useGetIpData", () => {
     mockedFetchUserIP.mockResolvedValueOnce({
       ...ipDataSample,
       location: {
+        ...ipDataSample.location,
         city: "New York",
         region: "NY",
         country: "US"
@@ -47,12 +48,41 @@ describe("useGetIpData", () => {
 
     await waitFor(() => {
       expect(result.current).toEqual({
-        data: {
+        data: expect.objectContaining({
           ip: "192.168.1.1",
           location: {
             city: "New York",
             region: "NY",
             country: "US"
+          }
+        }),
+        loading: false
+      });
+    });
+  });
+
+  it("should return IP timezone and local time when API call succeeds", async () => {
+    jest.useFakeTimers();
+    mockedFetchUserIP.mockResolvedValueOnce({
+      ...ipDataSample,
+      location: {
+        ...ipDataSample.location,
+        timezone: "-03:00"
+      },
+      ip: "192.168.1.1"
+    });
+    jest.setSystemTime(new Date("2025-03-02T18:12:00.000+01:00"));
+
+    const { result } = renderHook(() => useIpData());
+
+    await waitFor(() => {
+      expect(result.current).toEqual({
+        data: {
+          ip: "192.168.1.1",
+          location: expect.any(Object),
+          time: {
+            timezone: "UTC-3",
+            localTime: "02:12 PM"
           }
         },
         loading: false

@@ -57,7 +57,7 @@ npm start
 npm test
 ```
 
-### Environment Variables
+### 💾 Environment Variables
 ```
 REACT_APP_MAPBOX_TOKEN=your_mapbox_token
 REACT_APP_IPIFY_API_KEY=your_ipify_key

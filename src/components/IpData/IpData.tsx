@@ -4,9 +4,10 @@ import styles from "./IpData.module.css";
 
 export const IpData: FunctionComponent = () => {
   const {
-    data: { ip, location },
+    data: { ip, location, time },
     loading
   } = useIpData();
+
   return (
     <>
       {loading && (
@@ -28,6 +29,13 @@ export const IpData: FunctionComponent = () => {
             <p className={styles.boxText}>
               {location.city}, {location.region}, {location.country}
             </p>
+          </div>
+        )}
+        {time && (
+          <div className={styles.box}>
+            <h2 className={styles.boxTitle}>Time</h2>
+            <p className={styles.boxText}>{time.timezone}</p>
+            <p className={styles.boxSubtitle}>{time.localTime}</p>
           </div>
         )}
       </div>

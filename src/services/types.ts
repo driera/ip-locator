@@ -4,6 +4,7 @@ export interface IPResponse {
     city: string;
     region: string;
     country: string;
+    timezone: string;
   };
 }
 
