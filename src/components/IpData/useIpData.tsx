@@ -19,7 +19,7 @@ interface IPData {
   loading: boolean;
 }
 
-export const useIpData = (): IPData => {
+export const useIpData = (ipAddress?: string): IPData => {
   const [data, setData] = useState<IPData>({
     data: {
       ip: null,
@@ -32,7 +32,7 @@ export const useIpData = (): IPData => {
 
   useEffect(() => {
     const getIpData = async () => {
-      const response = await fetchUserIP();
+      const response = await fetchUserIP({ search: ipAddress });
 
       if (response) {
         setData({
@@ -59,7 +59,7 @@ export const useIpData = (): IPData => {
     };
 
     getIpData();
-  }, []);
+  }, [ipAddress]);
 
   return data;
 };
