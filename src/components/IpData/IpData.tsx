@@ -21,7 +21,6 @@ export const IpData: FunctionComponent = () => {
           <div className={styles.box}>
             <h2 className={styles.boxTitle}>Your IP Address</h2>
             <p className={styles.boxText}>{ip}</p>
-            <p className={styles.boxSubtitle}>ISP: {isp}</p>
           </div>
         )}
         {location && (
