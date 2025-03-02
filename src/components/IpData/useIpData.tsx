@@ -8,13 +8,13 @@ interface IPData {
       city: string;
       region: string;
       country: string;
-      coordinates?: string;
+      coordinates: string;
     } | null;
-    time?: {
+    time: {
       timezone: string;
       localTime: string;
-    };
-    isp?: string;
+    } | null;
+    isp: string | null;
   };
   loading: boolean;
 }
@@ -23,7 +23,9 @@ export const useIpData = (): IPData => {
   const [data, setData] = useState<IPData>({
     data: {
       ip: null,
-      location: null
+      location: null,
+      time: null,
+      isp: null
     },
     loading: true
   });
@@ -45,12 +47,10 @@ export const useIpData = (): IPData => {
                 response.location?.lng
               )
             },
-            time: response.location?.timezone
-              ? {
-                  timezone: formatTimezone(response.location.timezone),
-                  localTime: calculateLocalTime(response.location.timezone)
-                }
-              : undefined,
+            time: {
+              timezone: formatTimezone(response.location?.timezone),
+              localTime: calculateLocalTime(response.location?.timezone)
+            },
             isp: response.isp
           },
           loading: false
@@ -64,30 +64,26 @@ export const useIpData = (): IPData => {
   return data;
 };
 
-const formatCoordinates = (
-  latitude?: number,
-  longitude?: number
-): string | undefined => {
+const formatCoordinates = (latitude?: number, longitude?: number): string => {
   if (latitude === undefined || longitude === undefined) {
-    return undefined;
+    return "";
   }
   return `${latitude}, ${longitude}`;
 };
 
-const formatTimezone = (timezone: string): string => {
+const formatTimezone = (timezone?: string): string => {
+  if (!timezone) return "";
   const hours = parseInt(timezone.split(":")[0]);
   return `UTC${hours >= 0 ? "+" : ""}${hours}`;
 };
 
-const calculateLocalTime = (timezone: string): string => {
+const calculateLocalTime = (timezone?: string): string => {
+  if (!timezone) return "";
   const now = new Date();
-
   const timezoneHours = parseInt(timezone.split(":")[0]);
   const utcHours = now.getUTCHours();
   const minutes = now.getUTCMinutes();
-
   const localHours = (utcHours + timezoneHours + 24) % 24;
-
   const formattedHours = localHours % 12 || 12;
   const paddedHours = formattedHours.toString().padStart(2, "0");
   const paddedMinutes = minutes.toString().padStart(2, "0");
