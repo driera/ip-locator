@@ -14,6 +14,7 @@ interface IPData {
       timezone: string;
       localTime: string;
     };
+    isp?: string;
   };
   loading: boolean;
 }
@@ -49,7 +50,8 @@ export const useIpData = (): IPData => {
                   timezone: formatTimezone(response.location.timezone),
                   localTime: calculateLocalTime(response.location.timezone)
                 }
-              : undefined
+              : undefined,
+            isp: response.isp
           },
           loading: false
         });

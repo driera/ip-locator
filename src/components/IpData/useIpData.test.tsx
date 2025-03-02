@@ -80,13 +80,37 @@ describe("useGetIpData", () => {
 
     await waitFor(() => {
       expect(result.current).toEqual({
-        data: {
+        data: expect.objectContaining({
           ip: "192.168.1.1",
           location: expect.any(Object),
           time: {
             timezone: "UTC-3",
             localTime: "02:12 PM"
           }
+        }),
+        loading: false
+      });
+    });
+  });
+
+  it("should return IP Internet Service Provider", async () => {
+    jest.useFakeTimers();
+    mockedFetchUserIP.mockResolvedValueOnce({
+      ...ipDataSample,
+      ip: "192.168.1.1",
+      isp: "Google LLC"
+    });
+    jest.setSystemTime(new Date("2025-03-02T18:12:00.000+01:00"));
+
+    const { result } = renderHook(() => useIpData());
+
+    await waitFor(() => {
+      expect(result.current).toEqual({
+        data: {
+          ip: "192.168.1.1",
+          location: expect.any(Object),
+          time: expect.any(Object),
+          isp: "Google LLC"
         },
         loading: false
       });

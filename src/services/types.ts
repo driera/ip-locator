@@ -8,6 +8,7 @@ export interface IPResponse {
     lat: number;
     lng: number;
   };
+  isp: string;
 }
 
 export interface IPError {
