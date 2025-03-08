@@ -13,10 +13,12 @@ describe("useGetIpData", () => {
     jest.resetAllMocks();
   });
 
-  it("should return loading state initially", () => {
+  it("should return loading state initially", async () => {
     const { result } = renderHook(() => useGetIpData());
 
-    expect(result.current.loading).toEqual(true);
+    await waitFor(() => {
+      expect(result.current.loading).toEqual(true);
+    });
   });
 
   it("should return IP data when API call succeeds", async () => {
@@ -94,13 +96,11 @@ describe("useGetIpData", () => {
   });
 
   it("should return IP Internet Service Provider", async () => {
-    jest.useFakeTimers();
     mockedFetchUserIP.mockResolvedValueOnce({
       ...ipDataSample,
       ip: "192.168.1.1",
       isp: "Google LLC"
     });
-    jest.setSystemTime(new Date("2025-03-02T18:12:00.000+01:00"));
 
     const { result } = renderHook(() => useGetIpData());
 

@@ -17,7 +17,7 @@ const App: FunctionComponent = () => {
     <ErrorBoundary>
       <div className={styles.container}>
         <h1>Welcome to IP Locator</h1>
-        <SearchForm onSearch={handleSearch} />
+        <SearchForm onSearch={handleSearch} loading={loading} />
         <IpDetails data={data} loading={loading} />
       </div>
     </ErrorBoundary>

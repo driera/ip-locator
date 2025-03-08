@@ -1,8 +1,11 @@
 import { FunctionComponent } from "react";
 import styles from "./IpDetails.module.css";
-import { IPData } from "../useGetIpData/types";
+import { IpData } from "../useGetIpData/types";
 
-export const IpDetails: FunctionComponent<IPData> = ({ data, loading }) => {
+export const IpDetails: FunctionComponent<{
+  data: IpData;
+  loading: boolean;
+}> = ({ data, loading }) => {
   const { ip, location, time, isp } = data;
 
   return (

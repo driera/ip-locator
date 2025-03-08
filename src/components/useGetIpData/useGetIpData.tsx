@@ -1,50 +1,51 @@
 import { useEffect, useState } from "react";
 import { fetchUserIP } from "../../services/fetch-user-ip";
-import { IPData } from "./types";
+import { IpData } from "./types";
 
-export const useGetIpData = (ipAddress?: string): IPData => {
-  const [data, setData] = useState<IPData>({
-    data: {
-      ip: null,
-      location: null,
-      time: null,
-      isp: null
-    },
-    loading: true
+export const useGetIpData = (
+  ipAddress?: string
+): { data: IpData; loading: boolean } => {
+  const [data, setData] = useState<IpData>({
+    ip: null,
+    location: null,
+    time: null,
+    isp: null
   });
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getIpData = async () => {
-      const response = await fetchUserIP({ search: ipAddress });
+      setLoading(true);
 
+      const response = await fetchUserIP({ search: ipAddress });
       if (response) {
-        setData({
-          data: {
-            ip: response.ip,
-            location: {
-              city: response.location?.city,
-              region: response.location?.region,
-              country: response.location?.country,
-              coordinates: formatCoordinates(
-                response.location?.lat,
-                response.location?.lng
-              )
-            },
-            time: {
-              timezone: formatTimezone(response.location?.timezone),
-              localTime: calculateLocalTime(response.location?.timezone)
-            },
-            isp: response.isp
+        const formattedData: IpData = {
+          ip: response.ip,
+          location: {
+            city: response.location?.city,
+            region: response.location?.region,
+            country: response.location?.country,
+            coordinates: formatCoordinates(
+              response.location?.lat,
+              response.location?.lng
+            )
           },
-          loading: false
-        });
+          time: {
+            timezone: formatTimezone(response.location?.timezone),
+            localTime: calculateLocalTime(response.location?.timezone)
+          },
+          isp: response.isp
+        };
+        setData(formattedData);
       }
+
+      setLoading(false);
     };
 
     getIpData();
   }, [ipAddress]);
 
-  return data;
+  return { data, loading };
 };
 
 const formatCoordinates = (latitude?: number, longitude?: number): string => {

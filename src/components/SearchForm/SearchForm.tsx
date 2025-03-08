@@ -3,9 +3,11 @@ import { isValidIPAddress } from "./validation";
 import styles from "./SearchForm.module.css";
 
 export const SearchForm = ({
-  onSearch
+  onSearch,
+  loading
 }: {
   onSearch: (ipAddress: string) => void;
+  loading?: boolean;
 }) => {
   const [error, setError] = useState<string | null>(null);
 
@@ -42,7 +44,9 @@ export const SearchForm = ({
             aria-invalid={!!error}
             aria-describedby={error ? "ip-error" : undefined}
           />
-          <button type="submit">Search</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Searching..." : "Search"}
+          </button>
         </div>
         {error && (
           <p id="ip-error" className={styles.errorMessage} role="alert">
