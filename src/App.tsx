@@ -1,15 +1,16 @@
-import { FunctionComponent, useState } from "react";
-
+import { useState, FunctionComponent } from "react";
+import { IpDetails } from "./components/IpDetails/IpDetails";
+import { SearchForm } from "./components/SearchForm/SearchForm";
+import { useGetIpData } from "./components/useGetIpData/useGetIpData";
+import styles from "./App.module.css";
 import { ErrorBoundary } from "./components/ErrorBoundary/ErrorBoundary";
 
-import styles from "./App.module.css";
-import { IpData } from "./components/IpData/IpData";
-import { SearchForm } from "./components/SearchForm/SearchForm";
 const App: FunctionComponent = () => {
-  const [ipAddress, setIpAddress] = useState<string>();
+  const [searchIpAddress, setSearchIpAddress] = useState<string>();
+  const { data, loading } = useGetIpData(searchIpAddress);
 
   const handleSearch = (ipAddress: string) => {
-    setIpAddress(ipAddress);
+    setSearchIpAddress(ipAddress);
   };
 
   return (
@@ -17,7 +18,7 @@ const App: FunctionComponent = () => {
       <div className={styles.container}>
         <h1>Welcome to IP Locator</h1>
         <SearchForm onSearch={handleSearch} />
-        <IpData ipAddress={ipAddress} />
+        <IpDetails data={data} loading={loading} />
       </div>
     </ErrorBoundary>
   );

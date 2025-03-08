@@ -1,5 +1,5 @@
 import { renderHook, waitFor } from "@testing-library/react";
-import { useIpData } from "./useIpData";
+import { useGetIpData } from "./useGetIpData";
 import { fetchUserIP } from "../../services/fetch-user-ip";
 import { ipDataSample } from "../../services/data-samples";
 
@@ -14,7 +14,7 @@ describe("useGetIpData", () => {
   });
 
   it("should return loading state initially", () => {
-    const { result } = renderHook(() => useIpData());
+    const { result } = renderHook(() => useGetIpData());
 
     expect(result.current.loading).toEqual(true);
   });
@@ -25,7 +25,7 @@ describe("useGetIpData", () => {
       ip: "192.168.1.1"
     });
 
-    const { result } = renderHook(() => useIpData());
+    const { result } = renderHook(() => useGetIpData());
 
     await waitFor(() => {
       expect(result.current.data.ip).toEqual("192.168.1.1");
@@ -46,7 +46,7 @@ describe("useGetIpData", () => {
       ip: "192.168.1.1"
     });
 
-    const { result } = renderHook(() => useIpData());
+    const { result } = renderHook(() => useGetIpData());
 
     await waitFor(() => {
       expect(result.current).toEqual({
@@ -76,7 +76,7 @@ describe("useGetIpData", () => {
     });
     jest.setSystemTime(new Date("2025-03-02T18:12:00.000+01:00"));
 
-    const { result } = renderHook(() => useIpData());
+    const { result } = renderHook(() => useGetIpData());
 
     await waitFor(() => {
       expect(result.current).toEqual({
@@ -102,7 +102,7 @@ describe("useGetIpData", () => {
     });
     jest.setSystemTime(new Date("2025-03-02T18:12:00.000+01:00"));
 
-    const { result } = renderHook(() => useIpData());
+    const { result } = renderHook(() => useGetIpData());
 
     await waitFor(() => {
       expect(result.current).toEqual({

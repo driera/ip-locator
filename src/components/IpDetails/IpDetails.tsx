@@ -1,20 +1,15 @@
 import { FunctionComponent } from "react";
-import { useIpData } from "./useIpData";
-import styles from "./IpData.module.css";
+import styles from "./IpDetails.module.css";
+import { IPData } from "../useGetIpData/types";
 
-export const IpData: FunctionComponent<{ ipAddress?: string }> = ({
-  ipAddress
-}) => {
-  const {
-    data: { ip, location, time, isp },
-    loading
-  } = useIpData(ipAddress);
+export const IpDetails: FunctionComponent<IPData> = ({ data, loading }) => {
+  const { ip, location, time, isp } = data;
 
   return (
     <>
       {loading && (
         <div role="alert" aria-busy="true">
-          Loading your IP address...
+          Loading IP address data...
         </div>
       )}
 
