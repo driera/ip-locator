@@ -22,7 +22,9 @@ export const fetchUserIP = async ({
 
     if (!response.ok) {
       throw new APIError(
-        "Failed to fetch IP address",
+        search
+          ? `Failed to fetch IP address: ${search}`
+          : "Failed to fetch your IP address",
         response.status,
         response.statusText
       );

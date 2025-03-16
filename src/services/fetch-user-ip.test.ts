@@ -36,7 +36,18 @@ describe("fetchUserIP", () => {
     it("should throw APIError when API returns non-200 response", async () => {
       fetchMock({ ok: false, status: 404, statusText: "Not Found" });
 
-      await expect(fetchUserIP()).rejects.toThrow("Failed to fetch IP address");
+      await expect(fetchUserIP()).rejects.toThrow(
+        "Failed to fetch your IP address"
+      );
+      await expect(fetchUserIP()).rejects.toHaveProperty("status", 404);
+    });
+
+    it("should throw mention the search IP in the APIError message", async () => {
+      fetchMock({ ok: false, status: 404, statusText: "Not Found" });
+
+      await expect(fetchUserIP({ search: "1.2.3.4" })).rejects.toThrow(
+        "Failed to fetch IP address: 1.2.3.4"
+      );
       await expect(fetchUserIP()).rejects.toHaveProperty("status", 404);
     });
 
