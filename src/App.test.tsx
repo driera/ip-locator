@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import App from "./App";
 import { fetchMock } from "./services/__test_helpers__/fetch-mock";
 import userEvent from "@testing-library/user-event";
@@ -44,5 +44,32 @@ describe("App", () => {
       expect.anything()
     );
     expect(await screen.findByText("192.168.1.1")).toBeInTheDocument();
+  });
+
+  describe("Error handling", () => {
+    beforeEach(() => {
+      jest.useFakeTimers();
+    });
+
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
+    it("displays an error message when the API call fails", async () => {
+      fetchMock({
+        ok: false,
+        status: 404,
+        statusText: "NOT_FOUND",
+        json: () => Promise.reject(new Error("Failed to fetch IP address"))
+      });
+
+      render(<App />);
+
+      await waitFor(() =>
+        expect(screen.getByRole("alert")).toHaveTextContent(
+          "Failed to fetch your IP address"
+        )
+      );
+    });
   });
 });

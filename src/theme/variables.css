@@ -3,6 +3,7 @@
     --main-color: hsl(195, 100%, 40%);
     --dark-color: hsl(0, 0%, 7%);
     --light-color: hsl(0, 0%, 100%);
+    --error-color: #dd3365;
 
     /* Typography */
     --primary-font: "Noto Sans", sans-serif;

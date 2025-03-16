@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { fetchUserIP } from "../../services/fetch-user-ip";
 import { IpData } from "./types";
+import { APIError } from "../../services/types";
 
 export const useGetIpData = (
   ipAddress?: string
-): { data: IpData; loading: boolean } => {
+): { data: IpData; loading: boolean; error: APIError | undefined } => {
   const [data, setData] = useState<IpData>({
     ip: null,
     location: null,
@@ -12,40 +13,52 @@ export const useGetIpData = (
     isp: null
   });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<APIError>();
 
   useEffect(() => {
     const getIpData = async () => {
       setLoading(true);
+      setError(undefined);
 
-      const response = await fetchUserIP({ search: ipAddress });
-      if (response) {
-        const formattedData: IpData = {
-          ip: response.ip,
-          location: {
-            city: response.location?.city,
-            region: response.location?.region,
-            country: response.location?.country,
-            coordinates: formatCoordinates(
-              response.location?.lat,
-              response.location?.lng
-            )
-          },
-          time: {
-            timezone: formatTimezone(response.location?.timezone),
-            localTime: calculateLocalTime(response.location?.timezone)
-          },
-          isp: response.isp
-        };
-        setData(formattedData);
+      try {
+        const response = await fetchUserIP({ search: ipAddress });
+
+        if (response) {
+          const formattedData: IpData = {
+            ip: response.ip,
+            location: {
+              city: response.location?.city,
+              region: response.location?.region,
+              country: response.location?.country,
+              coordinates: formatCoordinates(
+                response.location?.lat,
+                response.location?.lng
+              )
+            },
+            time: {
+              timezone: formatTimezone(response.location?.timezone),
+              localTime: calculateLocalTime(response.location?.timezone)
+            },
+            isp: response.isp
+          };
+          setData(formattedData);
+        }
+      } catch (err) {
+        const fetchError = err as APIError;
+
+        setError(fetchError);
+        setTimeout(() => {
+          throw fetchError;
+        }, 0);
+      } finally {
+        setLoading(false);
       }
-
-      setLoading(false);
     };
 
     getIpData();
   }, [ipAddress]);
 
-  return { data, loading };
+  return { data, loading, error };
 };
 
 const formatCoordinates = (latitude?: number, longitude?: number): string => {

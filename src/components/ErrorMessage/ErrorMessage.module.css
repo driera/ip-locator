@@ -1,0 +1,14 @@
+.error-message {
+  border: 1px solid var(--error-color);
+  border-radius: 5rem;
+  padding: 0.5em 0.75em;
+  font-size: 14px;
+  color: var(--error-color);  
+  background: hsl(211, 30%, 15%, 0.5);
+  backdrop-filter: blur(5px);
+}
+
+.error-message-icon {
+  font-size: 0.85em;
+  margin-right: 0.25em;
+}
